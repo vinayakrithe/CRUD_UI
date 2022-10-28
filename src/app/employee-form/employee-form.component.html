@@ -1,0 +1,165 @@
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit(employeeForm)">
+    <div class="form-group" *ngIf="updateActive">
+        
+        <label for="Id">Employee ID </label>
+        <input type="text" id="Id" name="Id" placeholder="Enter FirstName" [(ngModel)]="id" [ngModelOptions]="{standalone: true}" disabled="true">
+    </div>
+    <div class="form-group">
+        
+        <label for="FirstName">First Name </label>
+        <input type="text" id="FirstName" name="FirstName" placeholder="Enter FirstName" formControlName="FirstName">
+        <span class="text-danger"
+            *ngIf="employeeForm.get('FirstName')!.touched && !employeeForm.get('FirstName')!.valid && !employeeForm.get('FirstName')!.dirty">
+            FirstName is required.
+        </span>
+        <span class="text-danger"
+            *ngIf="employeeForm.get('FirstName')!.touched && !employeeForm.get('FirstName')!.valid">
+           only characters
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="LastName"> Last Name</label>
+        <input type="text" id="LastName" name="LastName" placeholder="Enter LastName" formControlName="LastName" >
+        <span class="text-danger"
+            *ngIf="employeeForm.get('LastName')!.touched && !employeeForm.get('LastName')!.valid && !employeeForm.get('LastName')!.dirty">
+            LastName is required.
+        </span>
+        <span class="text-danger"
+            *ngIf="employeeForm.get('LastName')!.touched && !employeeForm.get('LastName')!.valid">
+           only characters
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="DateOfBirth"> Date Of Birth</label>
+        <!-- <input type="text" id="DateOfBirth" name="DateOfBirth" placeholder="Enter DateOfBirth" formControlName="DateOfBirth">
+        <span class="text-danger"
+            *ngIf="employeeForm.get('DateOfBirth')!.touched && !employeeForm.get('DateOfBirth')!.valid && !employeeForm.get('DateOfBirth')!.dirty">
+            DateOfBirth is required.
+        </span> -->
+        
+            <input matInput [matDatepicker]="picker"  [(ngModel)]="birthDate" [ngModelOptions]="{standalone: true}">
+            
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <!-- <span class="text-danger"
+            *ngIf="employeeForm.get('DateOfBirth')!.touched && !employeeForm.get('DateOfBirth')!.valid && !employeeForm.get('DateOfBirth')!.dirty">
+            DateOfBirth is required.
+        </span> -->
+    </div>
+    <div class="form-group"> 
+        <label for="Age">Age </label>
+        <input type="text" id="Age" name="Age" placeholder="Enter Age"  [(ngModel)]="age" [ngModelOptions]="{standalone: true}" (click)="calculateAge()">
+        
+    </div>
+
+    <div class="form-group">
+        <label for="Gender">Gender:</label>
+        <div>
+          <input id="male" type="radio" value="male" name="Gender" formControlName="Gender">
+          <label for="male">Male</label>
+       </div>
+
+       <div>
+          <input id="female" type="radio" value="female" name="Gender" formControlName="Gender">
+          <label for="female">Female</label>
+       </div>
+          
+    </div>
+
+    <div class="form-group">
+        <label for="City">City </label>
+        <input type="text" id="City" name="City" placeholder="Enter City" formControlName="City">
+        <span class="text-danger"
+            *ngIf="employeeForm.get('City')!.touched && !employeeForm.get('City')!.valid && !employeeForm.get('City')!.dirty">
+            City is required.
+        </span>
+        <span class="text-danger"
+            *ngIf="employeeForm.get('City')!.touched && !employeeForm.get('City')!.valid">
+           only characters
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="Country"> Country</label>
+        <input type="text" id="Country" name="Country" placeholder="Enter Country" formControlName="Country">
+        <span class="text-danger"
+            *ngIf="employeeForm.get('Country')!.touched && !employeeForm.get('Country')!.valid && !employeeForm.get('Country')!.dirty">
+            Country is required.
+        </span>
+        <span class="text-danger"
+            *ngIf="employeeForm.get('Country')!.touched && !employeeForm.get('Country')!.valid">
+           only characters
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="Address"> Address</label>
+        <input type="text" id="Address" name="Address" placeholder="Enter Address" formControlName="Address">
+        <span class="text-danger"
+            *ngIf="employeeForm.get('Address')!.touched && !employeeForm.get('Address')!.valid && !employeeForm.get('Address')!.dirty">
+            Address is required.
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="MobileNumber">Mobile Number </label>
+        <input type="text" id="MobileNumber" name="MobileNumber" placeholder="Enter MobileNumber" formControlName="MobileNumber">
+        <span class="text-danger"
+            *ngIf="employeeForm.get('MobileNumber')!.touched && !employeeForm.get('MobileNumber')!.valid && !employeeForm.get('MobileNumber')!.dirty">
+            Mobile Number is required.
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="Email">Email </label>
+        <input type="text" id="Email" name="Email" placeholder="Enter Email" formControlName="Email">
+        <span class="text-danger"
+            *ngIf="employeeForm.get('Email')!.touched && !employeeForm.get('Email')!.valid && !employeeForm.get('Email')!.dirty">
+            Email is required.
+        </span>
+    </div>
+    <span class="text-danger text-center" *ngIf="employeeForm.touched && !employeeForm.valid">
+        Please Provide Valid Data to Register.
+    </span>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Save"
+        [disabled]="!employeeForm.valid || updateActive">
+
+        <input  class="btn btn-lg btn-primary btn-block" value="Update"
+        [disabled]="!employeeForm.valid || !updateActive" (click)="updateEmployeee(employeeForm)">
+
+        <input  class="btn btn-lg btn-primary btn-block" value="Delete"
+        [disabled]="!employeeForm.valid || !updateActive"  (click)="deleteEmployeee()">
+
+        <input  class="btn btn-lg btn-primary btn-block" value="Clear"
+        [disabled]="!employeeForm.valid"  (click)="clearForm()">
+    </div>
+    <br>
+</form>
+
+
+<div class="container mt-5">
+    <table class="table table-striped">
+      <thead>
+          <tr>
+            <th>EmployeeID</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>DateOfBirth</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>MobileNumber</th>
+            <th>Email</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of Employees" (click)="onSelect(employeeForm,employee)">
+          <td>{{ employee.id }}</td>
+          <td>{{ employee.firstName }}</td>
+          <td>{{ employee.lastName }}</td>
+          <td>{{ employee.dateOfBirth }}</td>
+          <td>{{ employee.age }}</td>
+          <td>{{ employee.gender==0?"Male":"Female" }}</td>
+          <td>{{ employee.mobileNumber }}</td>
+          <td>{{ employee.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
